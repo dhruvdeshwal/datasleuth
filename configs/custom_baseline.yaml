@@ -1,0 +1,9 @@
+name: custom_baseline
+description: "Single-shot baseline on the messy-CSV suite (full profiled schema, no retries)."
+system: single_shot
+suite: custom
+seed: 0
+minimal_schema: false
+include_samples: true
+settings:
+  llm_model: gemini-3.1-flash-lite

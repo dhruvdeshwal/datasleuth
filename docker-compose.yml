@@ -1,0 +1,26 @@
+# docker compose up --build          -> API + built UI on :8000, and the nginx frontend on :8080
+# docker compose --profile sandbox build sandbox   -> build the Pandas sandbox image
+services:
+  api:
+    build: .
+    env_file: .env
+    environment:
+      DATASLEUTH_SANDBOX: subprocess        # set to "docker" only if you mount the Docker socket (see README: security model)
+      DATASLEUTH_CORS_ORIGINS: '["http://localhost:8080","http://localhost:5173"]'
+    ports: ["8000:8000"]
+    volumes: ["datasleuth-data:/data"]
+    read_only: true
+    tmpfs: ["/tmp"]
+    cap_drop: [ALL]
+    security_opt: ["no-new-privileges:true"]
+  frontend:
+    build: ./frontend
+    ports: ["8080:80"]
+    depends_on: [api]
+  sandbox:
+    build: { context: ., dockerfile: Dockerfile.sandbox }
+    image: datasleuth-sandbox:latest
+    profiles: ["sandbox"]
+    command: ["true"]                        # only built, never run as a service
+volumes:
+  datasleuth-data:

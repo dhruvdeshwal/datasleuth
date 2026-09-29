@@ -1,0 +1,1421 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "DataSleuth",
+    "version": "0.1.0"
+  },
+  "paths": {
+    "/healthz": {
+      "get": {
+        "summary": "Healthz",
+        "operationId": "healthz_healthz_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": {
+                    "type": "string"
+                  },
+                  "type": "object",
+                  "title": "Response Healthz Healthz Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/sessions": {
+      "post": {
+        "summary": "Create Session",
+        "operationId": "create_session_sessions_post",
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SessionOut"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/sessions/{session_id}": {
+      "delete": {
+        "summary": "Delete Session",
+        "operationId": "delete_session_sessions__session_id__delete",
+        "parameters": [
+          {
+            "name": "session_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Session Id"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/sessions/{session_id}/upload": {
+      "post": {
+        "summary": "Upload",
+        "operationId": "upload_sessions__session_id__upload_post",
+        "parameters": [
+          {
+            "name": "session_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Session Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "$ref": "#/components/schemas/Body_upload_sessions__session_id__upload_post"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SchemaInfo"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/sessions/{session_id}/connect": {
+      "post": {
+        "summary": "Connect",
+        "operationId": "connect_sessions__session_id__connect_post",
+        "parameters": [
+          {
+            "name": "session_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Session Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ConnectIn"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SchemaInfo"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/sessions/{session_id}/schema": {
+      "get": {
+        "summary": "Get Schema",
+        "operationId": "get_schema_sessions__session_id__schema_get",
+        "parameters": [
+          {
+            "name": "session_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Session Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SchemaInfo"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/sessions/{session_id}/preview/{table}": {
+      "get": {
+        "summary": "Preview",
+        "operationId": "preview_sessions__session_id__preview__table__get",
+        "parameters": [
+          {
+            "name": "session_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Session Id"
+            }
+          },
+          {
+            "name": "table",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Table"
+            }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "default": 20,
+              "title": "Limit"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PreviewOut"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/sessions/{session_id}/ask": {
+      "post": {
+        "summary": "Ask",
+        "operationId": "ask_sessions__session_id__ask_post",
+        "parameters": [
+          {
+            "name": "session_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Session Id"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/AskIn"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/traces/{trace_id}": {
+      "get": {
+        "summary": "Get Trace",
+        "operationId": "get_trace_traces__trace_id__get",
+        "parameters": [
+          {
+            "name": "trace_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Trace Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Report"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/traces/{trace_id}/chart.png": {
+      "get": {
+        "summary": "Get Chart Png",
+        "operationId": "get_chart_png_traces__trace_id__chart_png_get",
+        "parameters": [
+          {
+            "name": "trace_id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Trace Id"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AskIn": {
+        "properties": {
+          "question": {
+            "type": "string",
+            "maxLength": 2000,
+            "minLength": 1,
+            "title": "Question"
+          }
+        },
+        "type": "object",
+        "required": [
+          "question"
+        ],
+        "title": "AskIn",
+        "description": "A natural-language question."
+      },
+      "Attempt": {
+        "properties": {
+          "index": {
+            "type": "integer",
+            "title": "Index"
+          },
+          "language": {
+            "type": "string",
+            "enum": [
+              "sql",
+              "pandas"
+            ],
+            "title": "Language"
+          },
+          "code": {
+            "type": "string",
+            "title": "Code"
+          },
+          "rationale": {
+            "type": "string",
+            "title": "Rationale",
+            "default": ""
+          },
+          "result": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ExecutionResult"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "error": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Error"
+          },
+          "diagnosis": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Diagnosis"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "type": "object",
+        "required": [
+          "index",
+          "language",
+          "code",
+          "rationale",
+          "result",
+          "error",
+          "diagnosis"
+        ],
+        "title": "Attempt",
+        "description": "One write\u2192validate\u2192execute cycle, kept in the trace."
+      },
+      "Body_upload_sessions__session_id__upload_post": {
+        "properties": {
+          "files": {
+            "items": {
+              "type": "string",
+              "contentMediaType": "application/octet-stream"
+            },
+            "type": "array",
+            "title": "Files"
+          }
+        },
+        "type": "object",
+        "required": [
+          "files"
+        ],
+        "title": "Body_upload_sessions__session_id__upload_post"
+      },
+      "ChartSpec": {
+        "properties": {
+          "chart_type": {
+            "type": "string",
+            "enum": [
+              "bar",
+              "line",
+              "scatter",
+              "pie",
+              "histogram",
+              "box",
+              "area"
+            ],
+            "title": "Chart Type"
+          },
+          "x": {
+            "type": "string",
+            "title": "X"
+          },
+          "y": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Y"
+          },
+          "color": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Color"
+          },
+          "aggregation": {
+            "type": "string",
+            "enum": [
+              "none",
+              "sum",
+              "mean",
+              "count",
+              "min",
+              "max"
+            ],
+            "title": "Aggregation",
+            "default": "none"
+          },
+          "title": {
+            "type": "string",
+            "title": "Title",
+            "default": ""
+          },
+          "x_label": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "X Label"
+          },
+          "y_label": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Y Label"
+          },
+          "sort": {
+            "type": "string",
+            "enum": [
+              "none",
+              "asc",
+              "desc"
+            ],
+            "title": "Sort",
+            "default": "none"
+          },
+          "top_n": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "maximum": 50.0,
+                "minimum": 1.0
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Top N"
+          }
+        },
+        "type": "object",
+        "required": [
+          "chart_type",
+          "x",
+          "y",
+          "color",
+          "aggregation",
+          "title",
+          "x_label",
+          "y_label",
+          "sort",
+          "top_n"
+        ],
+        "title": "ChartSpec",
+        "description": "LLM-emitted chart description; rendering is deterministic code."
+      },
+      "ColumnInfo": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "original_name": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Original Name"
+          },
+          "dtype": {
+            "type": "string",
+            "title": "Dtype"
+          },
+          "semantic": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Semantic",
+            "description": "e.g. 'currency' or 'percent (12 means 12%)'."
+          },
+          "null_count": {
+            "type": "integer",
+            "title": "Null Count",
+            "default": 0
+          },
+          "distinct_count": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Distinct Count"
+          },
+          "min": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Min"
+          },
+          "max": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Max"
+          },
+          "samples": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Samples"
+          },
+          "primary_key": {
+            "type": "boolean",
+            "title": "Primary Key",
+            "default": false
+          }
+        },
+        "type": "object",
+        "required": [
+          "name",
+          "original_name",
+          "dtype",
+          "semantic",
+          "null_count",
+          "distinct_count",
+          "min",
+          "max",
+          "samples",
+          "primary_key"
+        ],
+        "title": "ColumnInfo",
+        "description": "One column with its inferred type and profile."
+      },
+      "ConnectIn": {
+        "properties": {
+          "url": {
+            "type": "string",
+            "maxLength": 500,
+            "minLength": 8,
+            "title": "Url"
+          }
+        },
+        "type": "object",
+        "required": [
+          "url"
+        ],
+        "title": "ConnectIn",
+        "description": "External database connection request (disabled unless the server enables it)."
+      },
+      "Diagnosis": {
+        "properties": {
+          "error_type": {
+            "type": "string",
+            "enum": [
+              "syntax_error",
+              "unknown_column",
+              "unknown_table",
+              "type_mismatch",
+              "ambiguous_column",
+              "join_error",
+              "empty_result",
+              "timeout",
+              "semantic_mismatch",
+              "validation_error",
+              "runtime_error"
+            ],
+            "title": "Error Type"
+          },
+          "explanation": {
+            "type": "string",
+            "title": "Explanation"
+          },
+          "repair_instruction": {
+            "type": "string",
+            "title": "Repair Instruction"
+          },
+          "escalate": {
+            "type": "string",
+            "enum": [
+              "none",
+              "widen_schema",
+              "switch_to_pandas"
+            ],
+            "title": "Escalate",
+            "default": "none"
+          }
+        },
+        "type": "object",
+        "required": [
+          "error_type",
+          "explanation",
+          "repair_instruction",
+          "escalate"
+        ],
+        "title": "Diagnosis",
+        "description": "Critic verdict on a failed or suspicious attempt."
+      },
+      "ExecutionResult": {
+        "properties": {
+          "ok": {
+            "type": "boolean",
+            "title": "Ok"
+          },
+          "rows": {
+            "items": {
+              "items": {},
+              "type": "array"
+            },
+            "type": "array",
+            "title": "Rows"
+          },
+          "columns": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Columns"
+          },
+          "row_count": {
+            "type": "integer",
+            "title": "Row Count",
+            "default": 0
+          },
+          "truncated": {
+            "type": "boolean",
+            "title": "Truncated",
+            "default": false
+          },
+          "error_type": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "syntax_error",
+                  "unknown_column",
+                  "unknown_table",
+                  "type_mismatch",
+                  "ambiguous_column",
+                  "join_error",
+                  "empty_result",
+                  "timeout",
+                  "semantic_mismatch",
+                  "validation_error",
+                  "runtime_error"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Error Type"
+          },
+          "error_message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Error Message"
+          },
+          "runtime_ms": {
+            "type": "number",
+            "title": "Runtime Ms",
+            "default": 0.0
+          }
+        },
+        "type": "object",
+        "required": [
+          "ok",
+          "rows",
+          "columns",
+          "row_count",
+          "truncated",
+          "error_type",
+          "error_message",
+          "runtime_ms"
+        ],
+        "title": "ExecutionResult",
+        "description": "Outcome of running validated code."
+      },
+      "ForeignKey": {
+        "properties": {
+          "columns": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Columns"
+          },
+          "ref_table": {
+            "type": "string",
+            "title": "Ref Table"
+          },
+          "ref_columns": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Ref Columns"
+          }
+        },
+        "type": "object",
+        "required": [
+          "columns",
+          "ref_table",
+          "ref_columns"
+        ],
+        "title": "ForeignKey",
+        "description": "A foreign-key relationship from this table to another."
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "Metrics": {
+        "properties": {
+          "llm_calls": {
+            "type": "integer",
+            "title": "Llm Calls",
+            "default": 0
+          },
+          "prompt_tokens": {
+            "type": "integer",
+            "title": "Prompt Tokens",
+            "default": 0
+          },
+          "completion_tokens": {
+            "type": "integer",
+            "title": "Completion Tokens",
+            "default": 0
+          },
+          "cost_usd": {
+            "type": "number",
+            "title": "Cost Usd",
+            "default": 0.0
+          },
+          "latency_ms": {
+            "type": "number",
+            "title": "Latency Ms",
+            "default": 0.0
+          },
+          "llm_latency_ms": {
+            "type": "number",
+            "title": "Llm Latency Ms",
+            "default": 0.0
+          },
+          "attempts": {
+            "type": "integer",
+            "title": "Attempts",
+            "default": 0
+          },
+          "retries": {
+            "type": "integer",
+            "title": "Retries",
+            "default": 0
+          }
+        },
+        "type": "object",
+        "required": [
+          "llm_calls",
+          "prompt_tokens",
+          "completion_tokens",
+          "cost_usd",
+          "latency_ms",
+          "llm_latency_ms",
+          "attempts",
+          "retries"
+        ],
+        "title": "Metrics",
+        "description": "Per-question accounting."
+      },
+      "Plan": {
+        "properties": {
+          "status": {
+            "type": "string",
+            "enum": [
+              "answerable",
+              "clarify",
+              "refuse"
+            ],
+            "title": "Status",
+            "default": "answerable"
+          },
+          "question_types": {
+            "items": {
+              "type": "string",
+              "enum": [
+                "aggregation",
+                "filter",
+                "join",
+                "ranking",
+                "time_series",
+                "comparison",
+                "other"
+              ]
+            },
+            "type": "array",
+            "title": "Question Types"
+          },
+          "needs_chart": {
+            "type": "boolean",
+            "title": "Needs Chart",
+            "default": false
+          },
+          "expected_columns": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Expected Columns",
+            "description": "How many columns the answer should have, if clear."
+          },
+          "expects_many_rows": {
+            "anyOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Expects Many Rows",
+            "description": "True for lists/breakdowns, False for a single value."
+          },
+          "preferred_language": {
+            "type": "string",
+            "enum": [
+              "sql",
+              "pandas"
+            ],
+            "title": "Preferred Language",
+            "default": "sql"
+          },
+          "steps": {
+            "type": "string",
+            "title": "Steps",
+            "description": "Short plan (1-4 sentences).",
+            "default": ""
+          },
+          "message": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Message",
+            "description": "Clarifying question or refusal reason when not answerable."
+          }
+        },
+        "type": "object",
+        "required": [
+          "status",
+          "question_types",
+          "needs_chart",
+          "expected_columns",
+          "expects_many_rows",
+          "preferred_language",
+          "steps",
+          "message"
+        ],
+        "title": "Plan",
+        "description": "Router/Planner output."
+      },
+      "PreviewOut": {
+        "properties": {
+          "table": {
+            "type": "string",
+            "title": "Table"
+          },
+          "columns": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Columns"
+          },
+          "rows": {
+            "items": {
+              "items": {},
+              "type": "array"
+            },
+            "type": "array",
+            "title": "Rows"
+          }
+        },
+        "type": "object",
+        "required": [
+          "table",
+          "columns",
+          "rows"
+        ],
+        "title": "PreviewOut",
+        "description": "First rows of a table."
+      },
+      "Report": {
+        "properties": {
+          "trace_id": {
+            "type": "string",
+            "title": "Trace Id"
+          },
+          "question": {
+            "type": "string",
+            "title": "Question"
+          },
+          "status": {
+            "type": "string",
+            "enum": [
+              "running",
+              "success",
+              "failed",
+              "clarify",
+              "refused"
+            ],
+            "title": "Status"
+          },
+          "answer": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Answer"
+          },
+          "language": {
+            "anyOf": [
+              {
+                "type": "string",
+                "enum": [
+                  "sql",
+                  "pandas"
+                ]
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Language"
+          },
+          "code": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Code"
+          },
+          "columns": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Columns"
+          },
+          "rows": {
+            "items": {
+              "items": {},
+              "type": "array"
+            },
+            "type": "array",
+            "title": "Rows"
+          },
+          "row_count": {
+            "type": "integer",
+            "title": "Row Count",
+            "default": 0
+          },
+          "truncated": {
+            "type": "boolean",
+            "title": "Truncated",
+            "default": false
+          },
+          "chart_spec": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/ChartSpec"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "chart_json": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Chart Json"
+          },
+          "has_chart_png": {
+            "type": "boolean",
+            "title": "Has Chart Png",
+            "default": false
+          },
+          "plan": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/Plan"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "attempts": {
+            "items": {
+              "$ref": "#/components/schemas/Attempt"
+            },
+            "type": "array",
+            "title": "Attempts"
+          },
+          "caveats": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Caveats"
+          },
+          "failure_reason": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Failure Reason"
+          },
+          "metrics": {
+            "$ref": "#/components/schemas/Metrics"
+          }
+        },
+        "type": "object",
+        "required": [
+          "trace_id",
+          "question",
+          "status",
+          "answer",
+          "language",
+          "code",
+          "columns",
+          "rows",
+          "row_count",
+          "truncated",
+          "chart_spec",
+          "chart_json",
+          "has_chart_png",
+          "plan",
+          "attempts",
+          "caveats",
+          "failure_reason",
+          "metrics"
+        ],
+        "title": "Report",
+        "description": "Everything returned to the user for one question."
+      },
+      "SchemaInfo": {
+        "properties": {
+          "dialect": {
+            "type": "string",
+            "enum": [
+              "sqlite",
+              "postgres",
+              "mysql"
+            ],
+            "title": "Dialect",
+            "default": "sqlite"
+          },
+          "tables": {
+            "items": {
+              "$ref": "#/components/schemas/TableInfo"
+            },
+            "type": "array",
+            "title": "Tables"
+          }
+        },
+        "type": "object",
+        "required": [
+          "dialect",
+          "tables"
+        ],
+        "title": "SchemaInfo",
+        "description": "Everything the agent knows about the available data."
+      },
+      "SessionOut": {
+        "properties": {
+          "session_id": {
+            "type": "string",
+            "title": "Session Id"
+          },
+          "ttl_minutes": {
+            "type": "integer",
+            "title": "Ttl Minutes"
+          }
+        },
+        "type": "object",
+        "required": [
+          "session_id",
+          "ttl_minutes"
+        ],
+        "title": "SessionOut",
+        "description": "A newly created session."
+      },
+      "TableInfo": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "source": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Source",
+            "description": "Display name of the origin file/sheet."
+          },
+          "row_count": {
+            "type": "integer",
+            "title": "Row Count",
+            "default": 0
+          },
+          "columns": {
+            "items": {
+              "$ref": "#/components/schemas/ColumnInfo"
+            },
+            "type": "array",
+            "title": "Columns"
+          },
+          "foreign_keys": {
+            "items": {
+              "$ref": "#/components/schemas/ForeignKey"
+            },
+            "type": "array",
+            "title": "Foreign Keys"
+          },
+          "warnings": {
+            "items": {
+              "type": "string"
+            },
+            "type": "array",
+            "title": "Warnings"
+          }
+        },
+        "type": "object",
+        "required": [
+          "name",
+          "source",
+          "row_count",
+          "columns",
+          "foreign_keys",
+          "warnings"
+        ],
+        "title": "TableInfo",
+        "description": "A table (or a file/sheet ingested as one)."
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          },
+          "input": {
+            "title": "Input"
+          },
+          "ctx": {
+            "type": "object",
+            "title": "Context"
+          }
+        },
+        "type": "object",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError"
+      }
+    }
+  }
+}

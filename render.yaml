@@ -1,0 +1,31 @@
+# Render Blueprint for the DataSleuth API (backend only; the frontend is deployed on Vercel).
+# Render dashboard: New > Blueprint > pick this repo. Then fill in the two secrets marked sync:false.
+services:
+  - type: web
+    name: datasleuth-api
+    runtime: python
+    plan: free
+    buildCommand: pip install .
+    startCommand: datasleuth serve --host 0.0.0.0 --port $PORT
+    healthCheckPath: /healthz
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.13.3
+      - key: GEMINI_API_KEY
+        sync: false            # paste your key in the Render dashboard, never in git
+      - key: DATASLEUTH_CORS_ORIGINS
+        sync: false            # JSON list with your Vercel URL, e.g. ["https://datasleuth.vercel.app"]
+      - key: DATASLEUTH_LLM_MODEL
+        value: gemini-3.1-flash-lite
+      - key: DATASLEUTH_SANDBOX
+        value: subprocess      # Render web services cannot run Docker-in-Docker
+      - key: DATASLEUTH_DATA_DIR
+        value: /tmp/datasleuth/data
+      - key: DATASLEUTH_CACHE_DIR
+        value: /tmp/datasleuth/cache
+      - key: DATASLEUTH_LOG_DIR
+        value: /tmp/datasleuth/logs
+      - key: DATASLEUTH_SESSION_TTL_MIN
+        value: "30"
+      - key: DATASLEUTH_LLM_DAILY_LIMIT
+        value: "200"           # protects your free Gemini quota from visitors

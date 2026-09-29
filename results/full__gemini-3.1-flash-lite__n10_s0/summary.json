@@ -1,0 +1,75 @@
+{
+  "n": 10,
+  "ex": 0.7,
+  "ex_ci95": [
+    0.4,
+    1.0
+  ],
+  "ex_by_difficulty": {
+    "easy": {
+      "n": 2,
+      "ex": 1.0
+    },
+    "medium": {
+      "n": 4,
+      "ex": 0.75
+    },
+    "hard": {
+      "n": 2,
+      "ex": 1.0
+    },
+    "extra": {
+      "n": 2,
+      "ex": 0.0
+    }
+  },
+  "valid_sql_rate": 1.0,
+  "first_attempt_ex": 0.8,
+  "final_ex": 0.7,
+  "avg_retries": 0.3,
+  "retry_success_rate": null,
+  "retry_harm_rate": 1.0,
+  "error_type_distribution": {
+    "runtime_error": 1
+  },
+  "latency_ms_mean": 19074.26417000006,
+  "latency_ms_p50": 16697.110700000394,
+  "latency_ms_p95": 48257.48340000019,
+  "prompt_tokens_mean": 4915.2,
+  "completion_tokens_mean": 343.6,
+  "cost_usd_per_question": 0.0,
+  "llm_calls_mean": 3.8,
+  "ex_by_group": {
+    "car_1": {
+      "n": 3,
+      "ex": 1.0
+    },
+    "concert_singer": {
+      "n": 1,
+      "ex": 1.0
+    },
+    "flight_2": {
+      "n": 1,
+      "ex": 0.0
+    },
+    "poker_player": {
+      "n": 2,
+      "ex": 1.0
+    },
+    "singer": {
+      "n": 1,
+      "ex": 1.0
+    },
+    "world_1": {
+      "n": 1,
+      "ex": 0.0
+    },
+    "wta_1": {
+      "n": 1,
+      "ex": 0.0
+    }
+  },
+  "complete": true,
+  "n_requested": 10,
+  "run_id": "full__gemini-3.1-flash-lite__n10_s0"
+}

@@ -1,0 +1,14 @@
+name: custom_full
+description: "Full agent on the hand-made messy-CSV suite (85 questions, 7 datasets)."
+system: agent
+suite: custom
+seed: 0
+settings:
+  llm_model: gemini-3.1-flash-lite
+  use_router: true
+  use_schema_linker: true
+  use_critic_semantic: true
+  max_retries: 3
+  allow_pandas: true
+  use_analyst: false
+  use_chart: false

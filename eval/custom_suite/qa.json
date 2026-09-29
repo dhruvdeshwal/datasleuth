@@ -1,0 +1,1681 @@
+[
+ {
+  "qid": "sales-01",
+  "dataset": "sales_orders",
+  "question": "What is the total order amount?",
+  "gold_sql": "SELECT SUM(amount) FROM sales_orders",
+  "expected": [
+   [
+    72206.73999999999
+   ]
+  ],
+  "order_matters": false,
+  "tags": [
+   "currency",
+   "nulls"
+  ],
+  "answerable": true
+ },
+ {
+  "qid": "sales-02",
+  "dataset": "sales_orders",
+  "question": "How many orders are there?",
+  "gold_sql": "SELECT COUNT(*) FROM sales_orders",
+  "expected": [
+   [
+    300
+   ]
+  ],
+  "order_matters": false,
+  "tags": [],
+  "answerable": true
+ },
+ {
+  "qid": "sales-03",
+  "dataset": "sales_orders",
+  "question": "What is the total amount per region?",
+  "gold_sql": "SELECT region, SUM(amount) FROM sales_orders GROUP BY region",
+  "expected": [
+   [
+    "East",
+    15132.52
+   ],
+   [
+    "North",
+    21510.35
+   ],
+   [
+    "South",
+    19277.01
+   ],
+   [
+    "West",
+    16286.86
+   ]
+  ],
+  "order_matters": false,
+  "tags": [
+   "whitespace",
+   "currency"
+  ],
+  "answerable": true
+ },
+ {
+  "qid": "sales-04",
+  "dataset": "sales_orders",
+  "question": "Which region has the highest total amount?",
+  "gold_sql": "SELECT region FROM sales_orders GROUP BY region ORDER BY SUM(amount) DESC LIMIT 1",
+  "expected": [
+   [
+    "North"
+   ]
+  ],
+  "order_matters": false,
+  "tags": [
+   "ranking",
+   "whitespace"
+  ],
+  "answerable": true
+ },
+ {
+  "qid": "sales-05",
+  "dataset": "sales_orders",
+  "question": "What is the average discount percentage?",
+  "gold_sql": "SELECT AVG(discount) FROM sales_orders",
+  "expected": [
+   [
+    7.666666666666667
+   ]
+  ],
+  "order_matters": false,
+  "tags": [
+   "percent"
+  ],
+  "answerable": true
+ },
+ {
+  "qid": "sales-06",
+  "dataset": "sales_orders",
+  "question": "How many orders were cancelled?",
+  "gold_sql": "SELECT COUNT(*) FROM sales_orders WHERE status = 'cancelled'",
+  "expected": [
+   [
+    48
+   ]
+  ],
+  "order_matters": false,
+  "tags": [],
+  "answerable": true
+ },
+ {
+  "qid": "sales-07",
+  "dataset": "sales_orders",
+  "question": "How many Widget units were sold in total?",
+  "gold_sql": "SELECT SUM(quantity) FROM sales_orders WHERE product = 'Widget'",
+  "expected": [
+   [
+    895
+   ]
+  ],
+  "order_matters": false,
+  "tags": [],
+  "answerable": true
+ },
+ {
+  "qid": "sales-08",
+  "dataset": "sales_orders",
+  "question": "What is the total amount for each month of 2023?",
+  "gold_sql": "SELECT strftime('%Y-%m', order_date) AS month, SUM(amount) FROM sales_orders GROUP BY month ORDER BY month",
+  "expected": [
+   [
+    "2023-01",
+    5997.26
+   ],
+   [
+    "2023-02",
+    6706.14
+   ],
+   [
+    "2023-03",
+    5955.88
+   ],
+   [
+    "2023-04",
+    6527.62
+   ],
+   [
+    "2023-05",
+    10161.89
+   ],
+   [
+    "2023-06",
+    5945.63
+   ],
+   [
+    "2023-07",
+    4502.46
+   ],
+   [
+    "2023-08",
+    5209.07
+   ],
+   [
+    "2023-09",
+    3622.04
+   ],
+   [
+    "2023-10",
+    3643.2400000000002
+   ],
+   [
+    "2023-11",
+    8717.25
+   ],
+   [
+    "2023-12",
+    5218.26
+   ]
+  ],
+  "order_matters": true,
+  "tags": [
+   "time_series",
+   "dates"
+  ],
+  "answerable": true
+ },
+ {
+  "qid": "sales-09",
+  "dataset": "sales_orders",
+  "question": "What are the top 3 products by total amount?",
+  "gold_sql": "SELECT product, SUM(amount) AS total FROM sales_orders GROUP BY product ORDER BY total DESC LIMIT 3",
+  "expected": [
+   [
+    "Doohickey",
+    39034.28
+   ],
+   [
+    "Gadget",
+    18689.55
+   ],
+   [
+    "Widget",
+    9949.97
+   ]
+  ],
+  "order_matters": true,
+  "tags": [
+   "ranking"
+  ],
+  "answerable": true
+ },
+ {
+  "qid": "sales-10",
+  "dataset": "sales_orders",
+  "question": "What is the average amount of shipped orders in the West region?",
+  "gold_sql": "SELECT AVG(amount) FROM sales_orders WHERE status = 'shipped' AND region = 'West'",
+  "expected": [
+   [
+    227.5878571428571
+   ]
+  ],
+  "order_matters": false,
+  "tags": [
+   "whitespace"
+  ],
+  "answerable": true
+ },
+ {
+  "qid": "sales-11",
+  "dataset": "sales_orders",
+  "question": "How many distinct products were ordered from October 2023 onwards?",
+  "gold_sql": "SELECT COUNT(DISTINCT product) FROM sales_orders WHERE order_date >= '2023-10-01'",
+  "expected": [
+   [
+    4
+   ]
+  ],
+  "order_matters": false,
+  "tags": [
+   "dates"
+  ],
+  "answerable": true
+ },
+ {
+  "qid": "sales-12",
+  "dataset": "sales_orders",
+  "question": "What is the largest single order amount?",
+  "gold_sql": "SELECT MAX(amount) FROM sales_orders",
+  "expected": [
+   [
+    1089.0
+   ]
+  ],
+  "order_matters": false,
+  "tags": [
+   "currency"
+  ],
+  "answerable": true
+ },
+ {
+  "qid": "sales-13",
+  "dataset": "sales_orders",
+  "question": "How many orders does each status have?",
+  "gold_sql": "SELECT status, COUNT(*) FROM sales_orders GROUP BY status",
+  "expected": [
+   [
+    "cancelled",
+    48
+   ],
+   [
+    "pending",
+    66
+   ],
+   [
+    "shipped",
+    186
+   ]
+  ],
+  "order_matters": false,
+  "tags": [],
+  "answerable": true
+ },
+ {
+  "qid": "sales-14",
+  "dataset": "sales_orders",
+  "question": "What was the profit margin of each product?",
+  "gold_sql": "",
+  "expected": null,
+  "order_matters": false,
+  "tags": [
+   "unanswerable"
+  ],
+  "answerable": false
+ },
+ {
+  "qid": "hr-01",
+  "dataset": "hr_employees",
+  "question": "How many employees are there?",
+  "gold_sql": "SELECT COUNT(*) FROM hr_employees",
+  "expected": [
+   [
+    120
+   ]
+  ],
+  "order_matters": false,
+  "tags": [
+   "title_row",
+   "duplicate_headers"
+  ],
+  "answerable": true
+ },
+ {
+  "qid": "hr-02",
+  "dataset": "hr_employees",
+  "question": "How many employees are active?",
+  "gold_sql": "SELECT COUNT(*) FROM hr_employees WHERE active = 1",
+  "expected": [
+   [
+    103
+   ]
+  ],
+  "order_matters": false,
+  "tags": [
+   "boolean"
+  ],
+  "answerable": true
+ },
+ {
+  "qid": "hr-03",
+  "dataset": "hr_employees",
+  "question": "What is the average salary per department?",
+  "gold_sql": "SELECT department, AVG(salary) FROM hr_employees GROUP BY department",
+  "expected": [
+   [
+    "Engineering",
+    108906.97674418605
+   ],
+   [
+    "Finance",
+    99384.61538461539
+   ],
+   [
+    "HR",
+    103750.0
+   ],
+   [
+    "Sales",
+    100382.35294117648
+   ],
+   [
+    "Support",
+    111363.63636363637
+   ]
+  ],
+  "order_matters": false,
+  "tags": [
+   "currency"
+  ],
+  "answerable": true
+ },
+ {
+  "qid": "hr-04",
+  "dataset": "hr_employees",
+  "question": "What is the name of the highest paid employee?",
+  "gold_sql": "SELECT full_name FROM hr_employees ORDER BY salary DESC, employee_id LIMIT 1",
+  "expected": [
+   [
+    "Employee 069"
+   ]
+  ],
+  "order_matters": false,
+  "tags": [
+   "ranking"
+  ],
+  "answerable": true
+ },
+ {
+  "qid": "hr-05",
+  "dataset": "hr_employees",
+  "question": "How many employees were hired in 2021?",
+  "gold_sql": "SELECT COUNT(*) FROM hr_employees WHERE hire_date >= '2021-01-01' AND hire_date < '2022-01-01'",
+  "expected": [
+   [
+    12
+   ]
+  ],
+  "order_matters": false,
+  "tags": [
+   "dates"
+  ],
+  "answerable": true
+ },
+ {
+  "qid": "hr-06",
+  "dataset": "hr_employees",
+  "question": "Which departments have more than 15 employees?",
+  "gold_sql": "SELECT department FROM hr_employees GROUP BY department HAVING COUNT(*) > 15",
+  "expected": [
+   [
+    "Engineering"
+   ],
+   [
+    "Sales"
+   ],
+   [
+    "Support"
+   ]
+  ],
+  "order_matters": false,
+  "tags": [],
+  "answerable": true
+ },
+ {
+  "qid": "hr-07",
+  "dataset": "hr_employees",
+  "question": "What is the total salary of active Engineering employees?",
+  "gold_sql": "SELECT SUM(salary) FROM hr_employees WHERE department = 'Engineering' AND active = 1",
+  "expected": [
+   [
+    4068000
+   ]
+  ],
+  "order_matters": false,
+  "tags": [
+   "boolean",
+   "currency"
+  ],
+  "answerable": true
+ },
+ {
+  "qid": "hr-08",
+  "dataset": "hr_employees",
+  "question": "How many employees have no manager?",
+  "gold_sql": "SELECT COUNT(*) FROM hr_employees WHERE manager_id IS NULL",
+  "expected": [
+   [
+    10
+   ]
+  ],
+  "order_matters": false,
+  "tags": [
+   "nulls"
+  ],
+  "answerable": true
+ },
+ {
+  "qid": "hr-09",
+  "dataset": "hr_employees",
+  "question": "What is the earliest hire date?",
+  "gold_sql": "SELECT MIN(hire_date) FROM hr_employees",
+  "expected": [
+   [
+    "2016-03-30"
+   ]
+  ],
+  "order_matters": false,
+  "tags": [
+   "dates"
+  ],
+  "answerable": true
+ },
+ {
+  "qid": "hr-10",
+  "dataset": "hr_employees",
+  "question": "What are the top 3 departments by average salary?",
+  "gold_sql": "SELECT department, AVG(salary) AS a FROM hr_employees GROUP BY department ORDER BY a DESC LIMIT 3",
+  "expected": [
+   [
+    "Support",
+    111363.63636363637
+   ],
+   [
+    "Engineering",
+    108906.97674418605
+   ],
+   [
+    "HR",
+    103750.0
+   ]
+  ],
+  "order_matters": true,
+  "tags": [
+   "ranking"
+  ],
+  "answerable": true
+ },
+ {
+  "qid": "hr-11",
+  "dataset": "hr_employees",
+  "question": "How many employees were hired in each year?",
+  "gold_sql": "SELECT CAST(strftime('%Y', hire_date) AS INTEGER) AS y, COUNT(*) FROM hr_employees GROUP BY y",
+  "expected": [
+   [
+    2016,
+    9
+   ],
+   [
+    2017,
+    18
+   ],
+   [
+    2018,
+    13
+   ],
+   [
+    2019,
+    20
+   ],
+   [
+    2020,
+    16
+   ],
+   [
+    2021,
+    12
+   ],
+   [
+    2022,
+    14
+   ],
+   [
+    2023,
+    18
+   ]
+  ],
+  "order_matters": false,
+  "tags": [
+   "dates",
+   "time_series"
+  ],
+  "answerable": true
+ },
+ {
+  "qid": "hr-12",
+  "dataset": "hr_employees",
+  "question": "What is the name of the manager of employee 42?",
+  "gold_sql": "SELECT m.full_name FROM hr_employees e JOIN hr_employees m ON e.manager_id = m.employee_id WHERE e.employee_id = 42",
+  "expected": [
+   [
+    "Employee 010"
+   ]
+  ],
+  "order_matters": false,
+  "tags": [
+   "join"
+  ],
+  "answerable": true
+ },
+ {
+  "qid": "hr-13",
+  "dataset": "hr_employees",
+  "question": "What is the average age of the employees?",
+  "gold_sql": "",
+  "expected": null,
+  "order_matters": false,
+  "tags": [
+   "unanswerable"
+  ],
+  "answerable": false
+ },
+ {
+  "qid": "web-01",
+  "dataset": "web_traffic",
+  "question": "What is the total number of visits?",
+  "gold_sql": "SELECT SUM(visits) FROM web_traffic",
+  "expected": [
+   [
+    1795286
+   ]
+  ],
+  "order_matters": false,
+  "tags": [
+   "thousands_separator"
+  ],
+  "answerable": true
+ },
+ {
+  "qid": "web-02",
+  "dataset": "web_traffic",
+  "question": "How many visits were there in March 2023?",
+  "gold_sql": "SELECT SUM(visits) FROM web_traffic WHERE date >= '2023-03-01' AND date < '2023-04-01'",
+  "expected": [
+   [
+    148214
+   ]
+  ],
+  "order_matters": false,
+  "tags": [
+   "dates"
+  ],
+  "answerable": true
+ },
+ {
+  "qid": "web-03",
+  "dataset": "web_traffic",
+  "question": "On which date were there the most visits?",
+  "gold_sql": "SELECT date FROM web_traffic ORDER BY visits DESC, date LIMIT 1",
+  "expected": [
+   [
+    "2023-05-17"
+   ]
+  ],
+  "order_matters": false,
+  "tags": [
+   "dates",
+   "ranking"
+  ],
+  "answerable": true
+ },
+ {
+  "qid": "web-04",
+  "dataset": "web_traffic",
+  "question": "What is the average bounce rate?",
+  "gold_sql": "SELECT AVG(bounce_rate) FROM web_traffic",
+  "expected": [
+   [
+    49.64929178470255
+   ]
+  ],
+  "order_matters": false,
+  "tags": [
+   "percent"
+  ],
+  "answerable": true
+ },
+ {
+  "qid": "web-05",
+  "dataset": "web_traffic",
+  "question": "Which month had the highest total revenue?",
+  "gold_sql": "SELECT strftime('%Y-%m', date) AS m FROM web_traffic GROUP BY m ORDER BY SUM(revenue) DESC LIMIT 1",
+  "expected": [
+   [
+    "2023-08"
+   ]
+  ],
+  "order_matters": false,
+  "tags": [
+   "time_series",
+   "nulls"
+  ],
+  "answerable": true
+ },
+ {
+  "qid": "web-06",
+  "dataset": "web_traffic",
+  "question": "What are the total visits for each month?",
+  "gold_sql": "SELECT strftime('%Y-%m', date) AS m, SUM(visits) FROM web_traffic GROUP BY m ORDER BY m",
+  "expected": [
+   [
+    "2023-01",
+    148199
+   ],
+   [
+    "2023-02",
+    110130
+   ],
+   [
+    "2023-03",
+    148214
+   ],
+   [
+    "2023-04",
+    159686
+   ],
+   [
+    "2023-05",
+    146671
+   ],
+   [
+    "2023-06",
+    145819
+   ],
+   [
+    "2023-07",
+    158400
+   ],
+   [
+    "2023-08",
+    161374
+   ],
+   [
+    "2023-09",
+    148538
+   ],
+   [
+    "2023-10",
+    175281
+   ],
+   [
+    "2023-11",
+    142642
+   ],
+   [
+    "2023-12",
+    150332
+   ]
+  ],
+  "order_matters": true,
+  "tags": [
+   "time_series"
+  ],
+  "answerable": true
+ },
+ {
+  "qid": "web-07",
+  "dataset": "web_traffic",
+  "question": "What is the average number of daily visits on weekends (Saturday and Sunday)?",
+  "gold_sql": "SELECT AVG(visits) FROM web_traffic WHERE strftime('%w', date) IN ('0', '6')",
+  "expected": [
+   [
+    5069.9902912621355
+   ]
+  ],
+  "order_matters": false,
+  "tags": [
+   "comparison",
+   "dates"
+  ],
+  "answerable": true
+ },
+ {
+  "qid": "web-08",
+  "dataset": "web_traffic",
+  "question": "On how many days was the bounce rate above 60%?",
+  "gold_sql": "SELECT COUNT(*) FROM web_traffic WHERE bounce_rate > 60",
+  "expected": [
+   [
+    106
+   ]
+  ],
+  "order_matters": false,
+  "tags": [
+   "percent"
+  ],
+  "answerable": true
+ },
+ {
+  "qid": "web-09",
+  "dataset": "web_traffic",
+  "question": "What is the total revenue in the second quarter of 2023?",
+  "gold_sql": "SELECT SUM(revenue) FROM web_traffic WHERE date >= '2023-04-01' AND date < '2023-07-01'",
+  "expected": [
+   [
+    221638.3
+   ]
+  ],
+  "order_matters": false,
+  "tags": [
+   "currency",
+   "nulls",
+   "dates"
+  ],
+  "answerable": true
+ },
+ {
+  "qid": "web-10",
+  "dataset": "web_traffic",
+  "question": "On how many days were there more than 5,000 visits?",
+  "gold_sql": "SELECT COUNT(*) FROM web_traffic WHERE visits > 5000",
+  "expected": [
+   [
+    185
+   ]
+  ],
+  "order_matters": false,
+  "tags": [],
+  "answerable": true
+ },
+ {
+  "qid": "web-11",
+  "dataset": "web_traffic",
+  "question": "What is the highest 7-day moving average of visits (over consecutive rows)?",
+  "gold_sql": "SELECT MAX(a) FROM (SELECT AVG(visits) OVER (ORDER BY date ROWS BETWEEN 6 PRECEDING AND CURRENT ROW) AS a FROM web_traffic)",
+  "expected": [
+   [
+    7123.142857142857
+   ]
+  ],
+  "order_matters": false,
+  "tags": [
+   "time_series",
+   "window"
+  ],
+  "answerable": true
+ },
+ {
+  "qid": "web-12",
+  "dataset": "web_traffic",
+  "question": "How many days have missing revenue?",
+  "gold_sql": "SELECT COUNT(*) FROM web_traffic WHERE revenue IS NULL",
+  "expected": [
+   [
+    8
+   ]
+  ],
+  "order_matters": false,
+  "tags": [
+   "nulls"
+  ],
+  "answerable": true
+ },
+ {
+  "qid": "pat-01",
+  "dataset": "patients_nulls",
+  "question": "How many patients have a known age?",
+  "gold_sql": "SELECT COUNT(age) FROM patients_nulls",
+  "expected": [
+   [
+    138
+   ]
+  ],
+  "order_matters": false,
+  "tags": [
+   "nulls",
+   "mixed_types"
+  ],
+  "answerable": true
+ },
+ {
+  "qid": "pat-02",
+  "dataset": "patients_nulls",
+  "question": "What is the average patient age?",
+  "gold_sql": "SELECT AVG(age) FROM patients_nulls",
+  "expected": [
+   [
+    47.70289855072464
+   ]
+  ],
+  "order_matters": false,
+  "tags": [
+   "nulls"
+  ],
+  "answerable": true
+ },
+ {
+  "qid": "pat-03",
+  "dataset": "patients_nulls",
+  "question": "How many patients are there per diagnosis?",
+  "gold_sql": "SELECT diagnosis, COUNT(*) FROM patients_nulls WHERE diagnosis IS NOT NULL GROUP BY diagnosis",
+  "expected": [
+   [
+    "asthma",
+    34
+   ],
+   [
+    "diabetes",
+    29
+   ],
+   [
+    "flu",
+    28
+   ],
+   [
+    "fracture",
+    27
+   ],
+   [
+    "hypertension",
+    23
+   ]
+  ],
+  "order_matters": false,
+  "tags": [
+   "nulls"
+  ],
+  "answerable": true
+ },
+ {
+  "qid": "pat-04",
+  "dataset": "patients_nulls",
+  "question": "What is the most common diagnosis?",
+  "gold_sql": "SELECT diagnosis FROM patients_nulls WHERE diagnosis IS NOT NULL GROUP BY diagnosis ORDER BY COUNT(*) DESC, diagnosis LIMIT 1",
+  "expected": [
+   [
+    "asthma"
+   ]
+  ],
+  "order_matters": false,
+  "tags": [
+   "ranking"
+  ],
+  "answerable": true
+ },
+ {
+  "qid": "pat-05",
+  "dataset": "patients_nulls",
+  "question": "How many patients have no recorded diagnosis?",
+  "gold_sql": "SELECT COUNT(*) FROM patients_nulls WHERE diagnosis IS NULL",
+  "expected": [
+   [
+    9
+   ]
+  ],
+  "order_matters": false,
+  "tags": [
+   "nulls"
+  ],
+  "answerable": true
+ },
+ {
+  "qid": "pat-06",
+  "dataset": "patients_nulls",
+  "question": "What is the average length of stay per diagnosis?",
+  "gold_sql": "SELECT diagnosis, AVG(length_of_stay) FROM patients_nulls WHERE diagnosis IS NOT NULL GROUP BY diagnosis",
+  "expected": [
+   [
+    "asthma",
+    7.03030303030303
+   ],
+   [
+    "diabetes",
+    8.413793103448276
+   ],
+   [
+    "flu",
+    6.178571428571429
+   ],
+   [
+    "fracture",
+    7.434782608695652
+   ],
+   [
+    "hypertension",
+    7.391304347826087
+   ]
+  ],
+  "order_matters": false,
+  "tags": [
+   "nulls"
+  ],
+  "answerable": true
+ },
+ {
+  "qid": "pat-07",
+  "dataset": "patients_nulls",
+  "question": "How many patients are older than 65?",
+  "gold_sql": "SELECT COUNT(*) FROM patients_nulls WHERE age > 65",
+  "expected": [
+   [
+    45
+   ]
+  ],
+  "order_matters": false,
+  "tags": [
+   "nulls"
+  ],
+  "answerable": true
+ },
+ {
+  "qid": "pat-08",
+  "dataset": "patients_nulls",
+  "question": "What is the total amount billed?",
+  "gold_sql": "SELECT SUM(bill) FROM patients_nulls",
+  "expected": [
+   [
+    1556230.46
+   ]
+  ],
+  "order_matters": false,
+  "tags": [
+   "currency"
+  ],
+  "answerable": true
+ },
+ {
+  "qid": "pat-09",
+  "dataset": "patients_nulls",
+  "question": "How many female patients have diabetes?",
+  "gold_sql": "SELECT COUNT(*) FROM patients_nulls WHERE sex = 'F' AND diagnosis = 'diabetes'",
+  "expected": [
+   [
+    17
+   ]
+  ],
+  "order_matters": false,
+  "tags": [],
+  "answerable": true
+ },
+ {
+  "qid": "pat-10",
+  "dataset": "patients_nulls",
+  "question": "What is the ID of the oldest patient?",
+  "gold_sql": "SELECT patient_id FROM patients_nulls ORDER BY age DESC, patient_id LIMIT 1",
+  "expected": [
+   [
+    21
+   ]
+  ],
+  "order_matters": false,
+  "tags": [
+   "ranking",
+   "nulls"
+  ],
+  "answerable": true
+ },
+ {
+  "qid": "pat-11",
+  "dataset": "patients_nulls",
+  "question": "How many patients were admitted in 2022?",
+  "gold_sql": "SELECT COUNT(*) FROM patients_nulls WHERE admit_date >= '2022-01-01' AND admit_date < '2023-01-01'",
+  "expected": [
+   [
+    90
+   ]
+  ],
+  "order_matters": false,
+  "tags": [
+   "dates"
+  ],
+  "answerable": true
+ },
+ {
+  "qid": "inv-01",
+  "dataset": "inventory",
+  "question": "What is the total inventory value (quantity times unit cost)?",
+  "gold_sql": "SELECT SUM(qty * unit_cost) FROM inventory",
+  "expected": [
+   [
+    430397.08999999997
+   ]
+  ],
+  "order_matters": false,
+  "tags": [
+   "currency",
+   "mixed_types"
+  ],
+  "answerable": true
+ },
+ {
+  "qid": "inv-02",
+  "dataset": "inventory",
+  "question": "How many items are below their reorder level?",
+  "gold_sql": "SELECT COUNT(*) FROM inventory WHERE qty < reorder_level",
+  "expected": [
+   [
+    14
+   ]
+  ],
+  "order_matters": false,
+  "tags": [
+   "nulls"
+  ],
+  "answerable": true
+ },
+ {
+  "qid": "inv-03",
+  "dataset": "inventory",
+  "question": "How many items are discontinued?",
+  "gold_sql": "SELECT COUNT(*) FROM inventory WHERE discontinued = 1",
+  "expected": [
+   [
+    17
+   ]
+  ],
+  "order_matters": false,
+  "tags": [
+   "boolean"
+  ],
+  "answerable": true
+ },
+ {
+  "qid": "inv-04",
+  "dataset": "inventory",
+  "question": "What is the average unit cost per category?",
+  "gold_sql": "SELECT category, AVG(unit_cost) FROM inventory GROUP BY category",
+  "expected": [
+   [
+    "electrical",
+    43.689032258064515
+   ],
+   [
+    "garden",
+    48.9164
+   ],
+   [
+    "paint",
+    40.536
+   ],
+   [
+    "tools",
+    34.67526315789474
+   ]
+  ],
+  "order_matters": false,
+  "tags": [
+   "currency"
+  ],
+  "answerable": true
+ },
+ {
+  "qid": "inv-05",
+  "dataset": "inventory",
+  "question": "Which category has the highest total quantity?",
+  "gold_sql": "SELECT category FROM inventory GROUP BY category ORDER BY SUM(qty) DESC LIMIT 1",
+  "expected": [
+   [
+    "electrical"
+   ]
+  ],
+  "order_matters": false,
+  "tags": [
+   "ranking"
+  ],
+  "answerable": true
+ },
+ {
+  "qid": "inv-06",
+  "dataset": "inventory",
+  "question": "What is the supplier ZIP code of SKU A-007?",
+  "gold_sql": "SELECT supplier_zip FROM inventory WHERE sku = 'A-007'",
+  "expected": [
+   [
+    "10001"
+   ]
+  ],
+  "order_matters": false,
+  "tags": [
+   "leading_zeros"
+  ],
+  "answerable": true
+ },
+ {
+  "qid": "inv-07",
+  "dataset": "inventory",
+  "question": "How many items were restocked after June 30, 2023?",
+  "gold_sql": "SELECT COUNT(*) FROM inventory WHERE last_restock > '2023-06-30'",
+  "expected": [
+   [
+    47
+   ]
+  ],
+  "order_matters": false,
+  "tags": [
+   "dates"
+  ],
+  "answerable": true
+ },
+ {
+  "qid": "inv-08",
+  "dataset": "inventory",
+  "question": "How many items have an unknown quantity?",
+  "gold_sql": "SELECT COUNT(*) FROM inventory WHERE qty IS NULL",
+  "expected": [
+   [
+    4
+   ]
+  ],
+  "order_matters": false,
+  "tags": [
+   "nulls",
+   "mixed_types"
+  ],
+  "answerable": true
+ },
+ {
+  "qid": "inv-09",
+  "dataset": "inventory",
+  "question": "What is the SKU of the most expensive item?",
+  "gold_sql": "SELECT sku FROM inventory ORDER BY unit_cost DESC, sku LIMIT 1",
+  "expected": [
+   [
+    "A-099"
+   ]
+  ],
+  "order_matters": false,
+  "tags": [
+   "ranking"
+  ],
+  "answerable": true
+ },
+ {
+  "qid": "inv-10",
+  "dataset": "inventory",
+  "question": "How many distinct supplier ZIP codes are there?",
+  "gold_sql": "SELECT COUNT(DISTINCT supplier_zip) FROM inventory",
+  "expected": [
+   [
+    6
+   ]
+  ],
+  "order_matters": false,
+  "tags": [
+   "leading_zeros"
+  ],
+  "answerable": true
+ },
+ {
+  "qid": "inv-11",
+  "dataset": "inventory",
+  "question": "List the SKUs of discontinued items that still have more than 100 units in stock.",
+  "gold_sql": "SELECT sku FROM inventory WHERE discontinued = 1 AND qty > 100",
+  "expected": [
+   [
+    "A-002"
+   ],
+   [
+    "A-015"
+   ],
+   [
+    "A-016"
+   ],
+   [
+    "A-034"
+   ],
+   [
+    "A-038"
+   ],
+   [
+    "A-052"
+   ],
+   [
+    "A-093"
+   ],
+   [
+    "A-094"
+   ]
+  ],
+  "order_matters": false,
+  "tags": [
+   "boolean"
+  ],
+  "answerable": true
+ },
+ {
+  "qid": "shop-01",
+  "dataset": "shop",
+  "question": "What is the total order value per city?",
+  "gold_sql": "SELECT c.city, SUM(o.order_total) FROM orders o JOIN customers c ON o.customer_id = c.customer_id GROUP BY c.city",
+  "expected": [
+   [
+    "Berlin",
+    19327.89
+   ],
+   [
+    "Madrid",
+    13400.19
+   ],
+   [
+    "Paris",
+    15741.210000000001
+   ],
+   [
+    "Rome",
+    7028.62
+   ]
+  ],
+  "order_matters": false,
+  "tags": [
+   "join",
+   "currency"
+  ],
+  "answerable": true
+ },
+ {
+  "qid": "shop-02",
+  "dataset": "shop",
+  "question": "Which customer has spent the most in total?",
+  "gold_sql": "SELECT c.name FROM orders o JOIN customers c ON o.customer_id = c.customer_id GROUP BY c.customer_id ORDER BY SUM(o.order_total) DESC LIMIT 1",
+  "expected": [
+   [
+    "Customer 03"
+   ]
+  ],
+  "order_matters": false,
+  "tags": [
+   "join",
+   "ranking"
+  ],
+  "answerable": true
+ },
+ {
+  "qid": "shop-03",
+  "dataset": "shop",
+  "question": "How many customers have never placed an order?",
+  "gold_sql": "SELECT COUNT(*) FROM customers WHERE customer_id NOT IN (SELECT customer_id FROM orders)",
+  "expected": [
+   [
+    6
+   ]
+  ],
+  "order_matters": false,
+  "tags": [
+   "join"
+  ],
+  "answerable": true
+ },
+ {
+  "qid": "shop-04",
+  "dataset": "shop",
+  "question": "What is the average order total for customers from Paris?",
+  "gold_sql": "SELECT AVG(o.order_total) FROM orders o JOIN customers c ON o.customer_id = c.customer_id WHERE c.city = 'Paris'",
+  "expected": [
+   [
+    276.1615789473684
+   ]
+  ],
+  "order_matters": false,
+  "tags": [
+   "join"
+  ],
+  "answerable": true
+ },
+ {
+  "qid": "shop-05",
+  "dataset": "shop",
+  "question": "What are the names of the top 3 customers by number of orders?",
+  "gold_sql": "SELECT c.name FROM orders o JOIN customers c ON o.customer_id = c.customer_id GROUP BY c.customer_id ORDER BY COUNT(*) DESC, c.name LIMIT 3",
+  "expected": [
+   [
+    "Customer 31"
+   ],
+   [
+    "Customer 03"
+   ],
+   [
+    "Customer 15"
+   ]
+  ],
+  "order_matters": true,
+  "tags": [
+   "join",
+   "ranking"
+  ],
+  "answerable": true
+ },
+ {
+  "qid": "shop-06",
+  "dataset": "shop",
+  "question": "Which city has the most customers?",
+  "gold_sql": "SELECT city FROM customers GROUP BY city ORDER BY COUNT(*) DESC, city LIMIT 1",
+  "expected": [
+   [
+    "Berlin"
+   ]
+  ],
+  "order_matters": false,
+  "tags": [],
+  "answerable": true
+ },
+ {
+  "qid": "shop-07",
+  "dataset": "shop",
+  "question": "What is the total order value of customers who signed up in 2022?",
+  "gold_sql": "SELECT SUM(o.order_total) FROM orders o JOIN customers c ON o.customer_id = c.customer_id WHERE c.signup_date >= '2022-01-01' AND c.signup_date < '2023-01-01'",
+  "expected": [
+   [
+    17290.670000000002
+   ]
+  ],
+  "order_matters": false,
+  "tags": [
+   "join",
+   "dates"
+  ],
+  "answerable": true
+ },
+ {
+  "qid": "shop-08",
+  "dataset": "shop",
+  "question": "How many cancelled orders does Customer 31 have?",
+  "gold_sql": "SELECT COUNT(*) FROM orders o JOIN customers c ON o.customer_id = c.customer_id WHERE c.name = 'Customer 31' AND o.status = 'cancelled'",
+  "expected": [
+   [
+    3
+   ]
+  ],
+  "order_matters": false,
+  "tags": [
+   "join"
+  ],
+  "answerable": true
+ },
+ {
+  "qid": "shop-09",
+  "dataset": "shop",
+  "question": "Which customers have more than 6 orders?",
+  "gold_sql": "SELECT c.name FROM orders o JOIN customers c ON o.customer_id = c.customer_id GROUP BY c.customer_id HAVING COUNT(*) > 6",
+  "expected": [
+   [
+    "Customer 01"
+   ],
+   [
+    "Customer 02"
+   ],
+   [
+    "Customer 03"
+   ],
+   [
+    "Customer 10"
+   ],
+   [
+    "Customer 12"
+   ],
+   [
+    "Customer 14"
+   ],
+   [
+    "Customer 15"
+   ],
+   [
+    "Customer 17"
+   ],
+   [
+    "Customer 18"
+   ],
+   [
+    "Customer 19"
+   ],
+   [
+    "Customer 21"
+   ],
+   [
+    "Customer 22"
+   ],
+   [
+    "Customer 24"
+   ],
+   [
+    "Customer 26"
+   ],
+   [
+    "Customer 27"
+   ],
+   [
+    "Customer 28"
+   ],
+   [
+    "Customer 31"
+   ]
+  ],
+  "order_matters": false,
+  "tags": [
+   "join"
+  ],
+  "answerable": true
+ },
+ {
+  "qid": "shop-10",
+  "dataset": "shop",
+  "question": "What is the average number of orders per customer (counting all customers)?",
+  "gold_sql": "SELECT CAST(COUNT(*) AS REAL) / (SELECT COUNT(*) FROM customers) FROM orders",
+  "expected": [
+   [
+    5.5
+   ]
+  ],
+  "order_matters": false,
+  "tags": [
+   "join"
+  ],
+  "answerable": true
+ },
+ {
+  "qid": "shop-11",
+  "dataset": "shop",
+  "question": "What is the date of the most recent order?",
+  "gold_sql": "SELECT MAX(order_date) FROM orders",
+  "expected": [
+   [
+    "2023-11-30"
+   ]
+  ],
+  "order_matters": false,
+  "tags": [
+   "dates"
+  ],
+  "answerable": true
+ },
+ {
+  "qid": "shop-12",
+  "dataset": "shop",
+  "question": "How many orders were refunded in Berlin?",
+  "gold_sql": "SELECT COUNT(*) FROM orders o JOIN customers c ON o.customer_id = c.customer_id WHERE c.city = 'Berlin' AND o.status = 'refunded'",
+  "expected": [
+   [
+    4
+   ]
+  ],
+  "order_matters": false,
+  "tags": [
+   "join"
+  ],
+  "answerable": true
+ },
+ {
+  "qid": "srv-01",
+  "dataset": "survey_responses",
+  "question": "What is the average satisfaction score?",
+  "gold_sql": "SELECT AVG(satisfaction) FROM survey_responses",
+  "expected": [
+   [
+    2.99
+   ]
+  ],
+  "order_matters": false,
+  "tags": [],
+  "answerable": true
+ },
+ {
+  "qid": "srv-02",
+  "dataset": "survey_responses",
+  "question": "How many respondents would recommend us?",
+  "gold_sql": "SELECT COUNT(*) FROM survey_responses WHERE recommend = 1",
+  "expected": [
+   [
+    70
+   ]
+  ],
+  "order_matters": false,
+  "tags": [
+   "boolean"
+  ],
+  "answerable": true
+ },
+ {
+  "qid": "srv-03",
+  "dataset": "survey_responses",
+  "question": "What percentage of respondents would recommend us?",
+  "gold_sql": "SELECT 100.0 * SUM(recommend) / COUNT(*) FROM survey_responses",
+  "expected": [
+   [
+    70.0
+   ]
+  ],
+  "order_matters": false,
+  "tags": [
+   "boolean",
+   "percent"
+  ],
+  "answerable": true
+ },
+ {
+  "qid": "srv-04",
+  "dataset": "survey_responses",
+  "question": "What is the average completion rate?",
+  "gold_sql": "SELECT AVG(completion_rate) FROM survey_responses",
+  "expected": [
+   [
+    68.88
+   ]
+  ],
+  "order_matters": false,
+  "tags": [
+   "percent"
+  ],
+  "answerable": true
+ },
+ {
+  "qid": "srv-05",
+  "dataset": "survey_responses",
+  "question": "How many responses have a satisfaction of 4 or higher?",
+  "gold_sql": "SELECT COUNT(*) FROM survey_responses WHERE satisfaction >= 4",
+  "expected": [
+   [
+    40
+   ]
+  ],
+  "order_matters": false,
+  "tags": [],
+  "answerable": true
+ },
+ {
+  "qid": "srv-06",
+  "dataset": "survey_responses",
+  "question": "How many responses are there for each satisfaction score?",
+  "gold_sql": "SELECT satisfaction, COUNT(*) FROM survey_responses GROUP BY satisfaction",
+  "expected": [
+   [
+    1,
+    23
+   ],
+   [
+    2,
+    15
+   ],
+   [
+    3,
+    22
+   ],
+   [
+    4,
+    20
+   ],
+   [
+    5,
+    20
+   ]
+  ],
+  "order_matters": false,
+  "tags": [],
+  "answerable": true
+ },
+ {
+  "qid": "srv-07",
+  "dataset": "survey_responses",
+  "question": "How many comments mention delivery?",
+  "gold_sql": "SELECT COUNT(*) FROM survey_responses WHERE comment LIKE '%delivery%'",
+  "expected": [
+   [
+    16
+   ]
+  ],
+  "order_matters": false,
+  "tags": [
+   "text",
+   "embedded_newline"
+  ],
+  "answerable": true
+ },
+ {
+  "qid": "srv-08",
+  "dataset": "survey_responses",
+  "question": "How many respondents are promoters (NPS score of 9 or 10)?",
+  "gold_sql": "SELECT COUNT(*) FROM survey_responses WHERE nps_score >= 9",
+  "expected": [
+   [
+    21
+   ]
+  ],
+  "order_matters": false,
+  "tags": [],
+  "answerable": true
+ },
+ {
+  "qid": "srv-09",
+  "dataset": "survey_responses",
+  "question": "How many respondents are detractors (NPS score of 6 or lower)?",
+  "gold_sql": "SELECT COUNT(*) FROM survey_responses WHERE nps_score <= 6",
+  "expected": [
+   [
+    59
+   ]
+  ],
+  "order_matters": false,
+  "tags": [],
+  "answerable": true
+ },
+ {
+  "qid": "srv-10",
+  "dataset": "survey_responses",
+  "question": "What is the average NPS score of respondents who would recommend us?",
+  "gold_sql": "SELECT AVG(nps_score) FROM survey_responses WHERE recommend = 1",
+  "expected": [
+   [
+    4.8428571428571425
+   ]
+  ],
+  "order_matters": false,
+  "tags": [
+   "boolean"
+  ],
+  "answerable": true
+ },
+ {
+  "qid": "srv-11",
+  "dataset": "survey_responses",
+  "question": "When was the most recent response submitted?",
+  "gold_sql": "SELECT MAX(submitted_at) FROM survey_responses",
+  "expected": [
+   [
+    "2023-06-29 20:43:08"
+   ]
+  ],
+  "order_matters": false,
+  "tags": [
+   "dates"
+  ],
+  "answerable": true
+ },
+ {
+  "qid": "srv-12",
+  "dataset": "survey_responses",
+  "question": "What is the average annual income of the respondents?",
+  "gold_sql": "",
+  "expected": null,
+  "order_matters": false,
+  "tags": [
+   "unanswerable"
+  ],
+  "answerable": false
+ }
+]

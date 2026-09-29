@@ -1,0 +1,59 @@
+name: CI
+on:
+  push: { branches: [main] }
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      e2e: { description: "Run the Playwright E2E job", type: boolean, default: false }
+
+jobs:
+  backend:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix: { python: ["3.11", "3.13"] }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "${{ matrix.python }}", cache: pip }
+      - run: pip install -e ".[dev,eval]"
+      - run: ruff check datasleuth tests eval scripts --exclude eval/spider
+      - run: ruff format --check datasleuth tests eval scripts --exclude eval/spider
+      - run: mypy datasleuth
+      # No API key is present: everything uses the scripted fake LLM. Spider-dependent tests skip
+      # themselves when the dataset has not been downloaded; live and docker tests are opt-in.
+      - run: pytest -m "not live and not docker"
+        env: { GEMINI_API_KEY: "" }
+
+  frontend:
+    runs-on: ubuntu-latest
+    defaults: { run: { working-directory: frontend } }
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22, cache: npm, cache-dependency-path: frontend/package-lock.json }
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm test
+      - run: npm run build
+
+  e2e:
+    if: github.event_name == 'workflow_dispatch' && inputs.e2e
+    needs: [backend, frontend]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: { python-version: "3.12" }
+      - uses: actions/setup-node@v4
+        with: { node-version: 22, cache: npm, cache-dependency-path: frontend/package-lock.json }
+      - run: pip install -e .
+      - run: npm ci && npm run build && npx playwright install --with-deps chromium && npm run e2e
+        working-directory: frontend
+        env: { PYTHON: python }
+
+  docker:
+    if: github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - run: docker build -t datasleuth . && docker build -f Dockerfile.sandbox -t datasleuth-sandbox .

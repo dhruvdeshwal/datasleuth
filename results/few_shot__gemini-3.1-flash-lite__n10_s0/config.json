@@ -1,0 +1,28 @@
+{
+  "name": "few_shot",
+  "description": "+ few-shot retrieval (train only)",
+  "system": "agent",
+  "suite": "spider",
+  "minimal_schema": false,
+  "include_samples": true,
+  "limit": 10,
+  "seed": 0,
+  "ts_eval": false,
+  "settings": {
+    "llm_model": "gemini-3.1-flash-lite",
+    "use_router": false,
+    "use_schema_linker": true,
+    "schema_linker_min_tables": 1,
+    "use_few_shot": true,
+    "use_critic_semantic": false,
+    "allow_pandas": false,
+    "use_analyst": false,
+    "use_chart": false,
+    "max_retries": 3,
+    "max_llm_calls": 12
+  },
+  "n_cases": 10,
+  "llm_model": "gemini-3.1-flash-lite",
+  "llm_provider": "gemini",
+  "temperature": 0.0
+}

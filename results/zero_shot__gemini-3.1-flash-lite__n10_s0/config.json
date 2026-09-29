@@ -1,0 +1,18 @@
+{
+  "name": "zero_shot",
+  "description": "single call, names/types/keys only",
+  "system": "single_shot",
+  "suite": "spider",
+  "minimal_schema": true,
+  "include_samples": false,
+  "limit": 10,
+  "seed": 0,
+  "ts_eval": false,
+  "settings": {
+    "llm_model": "gemini-3.1-flash-lite"
+  },
+  "n_cases": 10,
+  "llm_model": "gemini-3.1-flash-lite",
+  "llm_provider": "gemini",
+  "temperature": 0.0
+}

@@ -1,0 +1,17 @@
+name: full
+description: "Ablation 7: full system (router, schema linker, few-shot retrieval, retries, semantic critic)."
+system: agent
+suite: spider
+limit: 30
+seed: 0
+ts_eval: false
+settings:
+  llm_model: gemini-3.1-flash-lite
+  use_router: true
+  use_schema_linker: true
+  use_few_shot: true
+  use_critic_semantic: true
+  max_retries: 3
+  use_analyst: false   # the benchmark only needs the executed rows
+  use_chart: false
+  allow_pandas: true

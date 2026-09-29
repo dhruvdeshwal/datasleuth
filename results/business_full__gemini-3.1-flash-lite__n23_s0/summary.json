@@ -1,0 +1,49 @@
+{
+  "n": 23,
+  "ex": 0.9130434782608695,
+  "ex_ci95": [
+    0.782608695652174,
+    1.0
+  ],
+  "ex_by_difficulty": {
+    "easy": {
+      "n": 6,
+      "ex": 1.0
+    },
+    "medium": {
+      "n": 10,
+      "ex": 0.9
+    },
+    "hard": {
+      "n": 5,
+      "ex": 0.8
+    },
+    "unanswerable": {
+      "n": 2,
+      "ex": 1.0
+    }
+  },
+  "valid_sql_rate": 1.0,
+  "first_attempt_ex": 0.9130434782608695,
+  "final_ex": 0.9130434782608695,
+  "avg_retries": 0.0,
+  "retry_success_rate": null,
+  "retry_harm_rate": null,
+  "error_type_distribution": {},
+  "latency_ms_mean": 27452.95091304354,
+  "latency_ms_p50": 20368.84959999952,
+  "latency_ms_p95": 64415.86880000068,
+  "prompt_tokens_mean": 21537.82608695652,
+  "completion_tokens_mean": 300.4347826086956,
+  "cost_usd_per_question": 0.0,
+  "llm_calls_mean": 2.9130434782608696,
+  "ex_by_group": {
+    "northwind": {
+      "n": 23,
+      "ex": 0.9130434782608695
+    }
+  },
+  "complete": true,
+  "n_requested": 23,
+  "run_id": "business_full__gemini-3.1-flash-lite__n23_s0"
+}

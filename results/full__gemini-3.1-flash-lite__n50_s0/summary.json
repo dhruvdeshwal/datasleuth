@@ -1,0 +1,117 @@
+{
+  "n": 50,
+  "ex": 0.86,
+  "ex_ci95": [
+    0.76,
+    0.94
+  ],
+  "ex_by_difficulty": {
+    "easy": {
+      "n": 12,
+      "ex": 0.9166666666666666
+    },
+    "medium": {
+      "n": 22,
+      "ex": 0.9090909090909091
+    },
+    "hard": {
+      "n": 8,
+      "ex": 0.75
+    },
+    "extra": {
+      "n": 8,
+      "ex": 0.75
+    }
+  },
+  "valid_sql_rate": 1.0,
+  "first_attempt_ex": 0.88,
+  "final_ex": 0.86,
+  "avg_retries": 0.08,
+  "retry_success_rate": null,
+  "retry_harm_rate": 0.25,
+  "error_type_distribution": {},
+  "latency_ms_mean": 59.545908000000054,
+  "latency_ms_p50": 51.77209999965271,
+  "latency_ms_p95": 96.01069999916945,
+  "prompt_tokens_mean": 4321.18,
+  "completion_tokens_mean": 269.08,
+  "cost_usd_per_question": 0.0,
+  "llm_calls_mean": 2.78,
+  "ex_by_group": {
+    "car_1": {
+      "n": 7,
+      "ex": 0.8571428571428571
+    },
+    "concert_singer": {
+      "n": 3,
+      "ex": 1.0
+    },
+    "course_teach": {
+      "n": 2,
+      "ex": 1.0
+    },
+    "cre_Doc_Template_Mgt": {
+      "n": 3,
+      "ex": 1.0
+    },
+    "dog_kennels": {
+      "n": 3,
+      "ex": 0.6666666666666666
+    },
+    "employee_hire_evaluation": {
+      "n": 5,
+      "ex": 1.0
+    },
+    "flight_2": {
+      "n": 7,
+      "ex": 0.8571428571428571
+    },
+    "museum_visit": {
+      "n": 1,
+      "ex": 1.0
+    },
+    "network_1": {
+      "n": 1,
+      "ex": 1.0
+    },
+    "orchestra": {
+      "n": 1,
+      "ex": 1.0
+    },
+    "pets_1": {
+      "n": 1,
+      "ex": 1.0
+    },
+    "poker_player": {
+      "n": 5,
+      "ex": 1.0
+    },
+    "real_estate_properties": {
+      "n": 1,
+      "ex": 1.0
+    },
+    "singer": {
+      "n": 1,
+      "ex": 1.0
+    },
+    "student_transcripts_tracking": {
+      "n": 3,
+      "ex": 1.0
+    },
+    "tvshow": {
+      "n": 1,
+      "ex": 1.0
+    },
+    "world_1": {
+      "n": 3,
+      "ex": 0.3333333333333333
+    },
+    "wta_1": {
+      "n": 2,
+      "ex": 0.0
+    }
+  },
+  "complete": true,
+  "n_requested": 50,
+  "run_id": "full__gemini-3.1-flash-lite__n50_s0"
+}

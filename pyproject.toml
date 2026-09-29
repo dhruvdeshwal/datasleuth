@@ -1,0 +1,94 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "datasleuth"
+version = "0.1.0"
+description = "General-purpose multi-agent data analyst built with LangGraph."
+readme = "README.md"
+requires-python = ">=3.11"
+license = { text = "MIT" }
+dependencies = [
+  "pydantic==2.13.5",
+  "pydantic-settings==2.15.0",
+  "langgraph==1.2.12",
+  "langgraph-checkpoint-sqlite==3.1.1",
+  "langchain-core==1.6.5",
+  "fastapi==0.141.1",
+  "uvicorn[standard]==0.54.0",
+  "python-multipart==0.0.32",
+  "typer==0.27.2",
+  "duckdb==1.5.6",
+  "SQLAlchemy==2.1.1",
+  "sqlglot==30.20.0",
+  "pandas==3.0.6",
+  "numpy==2.5.3",
+  "plotly==7.1.0",
+  "kaleido==1.4.0",
+  "openpyxl==3.1.5",
+  "httpx==0.28.1",
+  "PyYAML==6.0.3",
+  "psutil==7.2.2",
+  "rich>=13",
+  "google-genai==2.25.0",
+]
+
+[project.optional-dependencies]
+anthropic = ["anthropic==1.9.0"]
+openai = ["openai==3.20.0"]
+postgres = ["psycopg[binary]>=3.1"]
+mysql = ["pymysql>=1.1"]
+eval = ["scipy==1.18.1", "matplotlib==3.11.2", "gdown==6.4.1", "nltk>=3.8", "tqdm", "sqlparse"]
+otel = ["opentelemetry-sdk", "opentelemetry-exporter-otlp-proto-http"]
+dev = [
+  "pytest==9.1.1",
+  "pytest-asyncio>=0.23",
+  "ruff==0.16.9",
+  "mypy==2.3.1",
+  "pre-commit>=3.7",
+  "pandas-stubs",
+  "types-PyYAML",
+]
+
+[project.scripts]
+datasleuth = "datasleuth.cli:app"
+
+[tool.setuptools.packages.find]
+include = ["datasleuth*", "eval*"]
+
+[tool.setuptools.package-data]
+datasleuth = ["prompts/**/*.md"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q -m 'not live and not docker'"
+filterwarnings = ["ignore::SyntaxWarning"]
+markers = [
+  "live: needs a real LLM API key (opt-in: pytest -m live)",
+  "docker: needs a running Docker engine (opt-in: pytest -m docker)",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "SIM", "RUF"]
+ignore = ["RUF012", "E501"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/*" = ["E731", "E741", "B023"]
+
+[[tool.mypy.overrides]]
+module = ["eval.custom_suite.build", "eval.business_suite.build"]
+# Expected-answer lambdas over pandas frames are dynamically typed by design (pandas-stubs cannot follow them).
+ignore_errors = true
+
+[tool.mypy]
+python_version = "3.12"
+strict = true
+ignore_missing_imports = true
+plugins = ["pydantic.mypy"]
+exclude = ["frontend/", "tests/"]
+

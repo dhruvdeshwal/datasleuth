@@ -1,0 +1,14 @@
+name: business_full
+description: "Full agent on business questions over the Northwind trading database (16k orders, 609k order lines)."
+system: agent
+suite: business
+seed: 0
+settings:
+  llm_model: gemini-3.1-flash-lite
+  use_router: true
+  use_schema_linker: true
+  use_critic_semantic: true
+  max_retries: 3
+  allow_pandas: true
+  use_analyst: false
+  use_chart: false

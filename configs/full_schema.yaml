@@ -1,0 +1,10 @@
+name: full_schema
+description: "Ablation 2: single LLM call with the full profiled schema and sample values."
+system: single_shot
+suite: spider
+minimal_schema: false
+include_samples: true
+limit: 30
+seed: 0
+settings:
+  llm_model: gemini-3.1-flash-lite

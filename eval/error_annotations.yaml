@@ -1,0 +1,11 @@
+# Manual review notes merged into error_analysis.md (qid -> {cluster, note}).
+biz-11:
+  cluster: value_format_mismatch
+  note: >-
+    The numbers match the gold answer exactly; the model labelled months '01'..'12' (the year was
+    filtered to 2022 in the query) while the gold uses 'YYYY-MM'. Arguably a correct answer scored as
+    wrong by exact comparison. The question was NOT edited after seeing the output.
+biz-08:
+  note: >-
+    A real data trap: two different customers (IDs Val2 and VALON) share the company name "IT".
+    Grouping by name merges them into a fake 9.7M "top customer". The gold groups by customer ID.

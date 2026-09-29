@@ -1,0 +1,509 @@
+[
+ {
+  "qid": "biz-01",
+  "dataset": "northwind",
+  "question": "How many customers do we have?",
+  "gold_sql": "SELECT COUNT(*) FROM Customers",
+  "expected": [
+   [
+    93
+   ]
+  ],
+  "order_matters": false,
+  "difficulty": "easy",
+  "answerable": true
+ },
+ {
+  "qid": "biz-02",
+  "dataset": "northwind",
+  "question": "How many orders have not been shipped yet?",
+  "gold_sql": "SELECT COUNT(*) FROM Orders WHERE ShippedDate IS NULL",
+  "expected": [
+   [
+    21
+   ]
+  ],
+  "order_matters": false,
+  "difficulty": "easy",
+  "answerable": true
+ },
+ {
+  "qid": "biz-03",
+  "dataset": "northwind",
+  "question": "How many products are discontinued?",
+  "gold_sql": "SELECT COUNT(*) FROM Products WHERE Discontinued = 1",
+  "expected": [
+   [
+    8
+   ]
+  ],
+  "order_matters": false,
+  "difficulty": "easy",
+  "answerable": true
+ },
+ {
+  "qid": "biz-04",
+  "dataset": "northwind",
+  "question": "What is the total value of our current inventory (units in stock times unit price)?",
+  "gold_sql": "SELECT SUM(UnitsInStock * UnitPrice) FROM Products",
+  "expected": [
+   [
+    74050.85
+   ]
+  ],
+  "order_matters": false,
+  "difficulty": "easy",
+  "answerable": true
+ },
+ {
+  "qid": "biz-05",
+  "dataset": "northwind",
+  "question": "Which country has the most customers?",
+  "gold_sql": "SELECT Country FROM Customers GROUP BY Country ORDER BY COUNT(*) DESC LIMIT 1",
+  "expected": [
+   [
+    "USA"
+   ]
+  ],
+  "order_matters": false,
+  "difficulty": "easy",
+  "answerable": true
+ },
+ {
+  "qid": "biz-06",
+  "dataset": "northwind",
+  "question": "What is our total revenue after discounts?",
+  "gold_sql": "SELECT SUM(UnitPrice * Quantity * (1 - Discount)) FROM \"Order Details\"",
+  "expected": [
+   [
+    448386633.1695
+   ]
+  ],
+  "order_matters": false,
+  "difficulty": "medium",
+  "answerable": true
+ },
+ {
+  "qid": "biz-07",
+  "dataset": "northwind",
+  "question": "What is the revenue after discounts for each product category?",
+  "gold_sql": "SELECT c.CategoryName, SUM(od.UnitPrice * od.Quantity * (1 - od.Discount)) FROM \"Order Details\" od JOIN Products p ON od.ProductID = p.ProductID JOIN Categories c ON p.CategoryID = c.CategoryID GROUP BY c.CategoryName",
+  "expected": [
+   [
+    "Beverages",
+    92163184.18
+   ],
+   [
+    "Condiments",
+    55795126.785
+   ],
+   [
+    "Confections",
+    66337803.065
+   ],
+   [
+    "Dairy Products",
+    58018116.785
+   ],
+   [
+    "Grains/Cereals",
+    28568530.3375
+   ],
+   [
+    "Meat/Poultry",
+    64881147.9695
+   ],
+   [
+    "Produce",
+    32701119.88
+   ],
+   [
+    "Seafood",
+    49921604.1675
+   ]
+  ],
+  "order_matters": false,
+  "difficulty": "medium",
+  "answerable": true
+ },
+ {
+  "qid": "biz-08",
+  "dataset": "northwind",
+  "question": "Who are our top 5 customers by revenue after discounts? Show the company name and the revenue.",
+  "gold_sql": "SELECT c.CompanyName, SUM(od.UnitPrice * od.Quantity * (1 - od.Discount)) AS rev FROM \"Order Details\" od JOIN Orders o ON od.OrderID = o.OrderID JOIN Customers c ON o.CustomerID = c.CustomerID GROUP BY c.CustomerID ORDER BY rev DESC LIMIT 5",
+  "expected": [
+   [
+    "B's Beverages",
+    6154115.34
+   ],
+   [
+    "Hungry Coyote Import Store",
+    5698023.67
+   ],
+   [
+    "Rancho grande",
+    5559110.08
+   ],
+   [
+    "Gourmet Lanchonetes",
+    5552309.805
+   ],
+   [
+    "Ana Trujillo Emparedados y helados",
+    5534356.65
+   ]
+  ],
+  "order_matters": true,
+  "difficulty": "medium",
+  "answerable": true
+ },
+ {
+  "qid": "biz-09",
+  "dataset": "northwind",
+  "question": "What is the average order value (revenue after discounts per order)?",
+  "gold_sql": "SELECT SUM(UnitPrice * Quantity * (1 - Discount)) / COUNT(DISTINCT OrderID) FROM \"Order Details\"",
+  "expected": [
+   [
+    27538.793340468
+   ]
+  ],
+  "order_matters": false,
+  "difficulty": "medium",
+  "answerable": true
+ },
+ {
+  "qid": "biz-10",
+  "dataset": "northwind",
+  "question": "How many orders were shipped after their required date?",
+  "gold_sql": "SELECT COUNT(*) FROM Orders WHERE ShippedDate > RequiredDate",
+  "expected": [
+   [
+    3755
+   ]
+  ],
+  "order_matters": false,
+  "difficulty": "medium",
+  "answerable": true
+ },
+ {
+  "qid": "biz-11",
+  "dataset": "northwind",
+  "question": "What is the monthly revenue after discounts for 2022?",
+  "gold_sql": "SELECT substr(o.OrderDate, 1, 7) AS month, SUM(od.UnitPrice * od.Quantity * (1 - od.Discount)) FROM \"Order Details\" od JOIN Orders o ON od.OrderID = o.OrderID WHERE substr(o.OrderDate, 1, 4) = '2022' GROUP BY month ORDER BY month",
+  "expected": [
+   [
+    "2022-01",
+    3591353.72
+   ],
+   [
+    "2022-02",
+    2832321.16
+   ],
+   [
+    "2022-03",
+    3222005.69
+   ],
+   [
+    "2022-04",
+    2628034.83
+   ],
+   [
+    "2022-05",
+    3719270.11
+   ],
+   [
+    "2022-06",
+    3378131.17
+   ],
+   [
+    "2022-07",
+    3358177.3
+   ],
+   [
+    "2022-08",
+    3660257.83
+   ],
+   [
+    "2022-09",
+    2606755.13
+   ],
+   [
+    "2022-10",
+    3717586.61
+   ],
+   [
+    "2022-11",
+    3542815.27
+   ],
+   [
+    "2022-12",
+    3485357.36
+   ]
+  ],
+  "order_matters": true,
+  "difficulty": "hard",
+  "answerable": true
+ },
+ {
+  "qid": "biz-12",
+  "dataset": "northwind",
+  "question": "Which employee generated the most revenue after discounts? Give their full name.",
+  "gold_sql": "SELECT e.FirstName || ' ' || e.LastName FROM \"Order Details\" od JOIN Orders o ON od.OrderID = o.OrderID JOIN Employees e ON o.EmployeeID = e.EmployeeID GROUP BY e.EmployeeID ORDER BY SUM(od.UnitPrice * od.Quantity * (1 - od.Discount)) DESC LIMIT 1",
+  "expected": [
+   [
+    "Margaret Peacock"
+   ]
+  ],
+  "order_matters": false,
+  "difficulty": "medium",
+  "answerable": true
+ },
+ {
+  "qid": "biz-13",
+  "dataset": "northwind",
+  "question": "What is the average freight cost for each shipping company?",
+  "gold_sql": "SELECT s.CompanyName, AVG(o.Freight) FROM Orders o JOIN Shippers s ON o.ShipVia = s.ShipperID GROUP BY s.CompanyName",
+  "expected": [
+   [
+    "Federal Shipping",
+    248.67959164988096
+   ],
+   [
+    "Speedy Express",
+    249.4629334582943
+   ],
+   [
+    "United Package",
+    247.63880787458987
+   ]
+  ],
+  "order_matters": false,
+  "difficulty": "medium",
+  "answerable": true
+ },
+ {
+  "qid": "biz-14",
+  "dataset": "northwind",
+  "question": "Which products are running low, meaning units in stock are below the reorder level? List their names.",
+  "gold_sql": "SELECT ProductName FROM Products WHERE UnitsInStock < ReorderLevel",
+  "expected": [
+   [
+    "Chang"
+   ],
+   [
+    "Aniseed Syrup"
+   ],
+   [
+    "Queso Cabrales"
+   ],
+   [
+    "Sir Rodney's Scones"
+   ],
+   [
+    "Nord-Ost Matjeshering"
+   ],
+   [
+    "Gorgonzola Telino"
+   ],
+   [
+    "Mascarpone Fabioli"
+   ],
+   [
+    "Gravad lax"
+   ],
+   [
+    "Ipoh Coffee"
+   ],
+   [
+    "Rogede sild"
+   ],
+   [
+    "Chocolade"
+   ],
+   [
+    "Maxilaku"
+   ],
+   [
+    "Gnocchi di nonna Alice"
+   ],
+   [
+    "Wimmers gute Semmelkn\u00f6del"
+   ],
+   [
+    "Louisiana Hot Spiced Okra"
+   ],
+   [
+    "Scottish Longbreads"
+   ],
+   [
+    "Outback Lager"
+   ],
+   [
+    "Longlife Tofu"
+   ]
+  ],
+  "order_matters": false,
+  "difficulty": "medium",
+  "answerable": true
+ },
+ {
+  "qid": "biz-15",
+  "dataset": "northwind",
+  "question": "Which suppliers provide more than 3 products? List the company names.",
+  "gold_sql": "SELECT s.CompanyName FROM Suppliers s JOIN Products p ON s.SupplierID = p.SupplierID GROUP BY s.SupplierID HAVING COUNT(*) > 3",
+  "expected": [
+   [
+    "New Orleans Cajun Delights"
+   ],
+   [
+    "Pavlova, Ltd."
+   ],
+   [
+    "Specialty Biscuits, Ltd."
+   ],
+   [
+    "Plutzer Lebensmittelgro\u00dfm\u00e4rkte AG"
+   ]
+  ],
+  "order_matters": false,
+  "difficulty": "hard",
+  "answerable": true
+ },
+ {
+  "qid": "biz-16",
+  "dataset": "northwind",
+  "question": "By what percentage did revenue after discounts grow from 2021 to 2022?",
+  "gold_sql": "SELECT 100.0 * (SUM(CASE WHEN substr(o.OrderDate, 1, 4) = '2022' THEN od.UnitPrice * od.Quantity * (1 - od.Discount) END) / SUM(CASE WHEN substr(o.OrderDate, 1, 4) = '2021' THEN od.UnitPrice * od.Quantity * (1 - od.Discount) END) - 1) FROM \"Order Details\" od JOIN Orders o ON od.OrderID = o.OrderID",
+  "expected": [
+   [
+    -3.9014922305322774
+   ]
+  ],
+  "order_matters": false,
+  "difficulty": "hard",
+  "answerable": true
+ },
+ {
+  "qid": "biz-17",
+  "dataset": "northwind",
+  "question": "What share of total revenue after discounts comes from our top 10 customers? Give the percentage.",
+  "gold_sql": "SELECT 100.0 * SUM(rev) / (SELECT SUM(UnitPrice * Quantity * (1 - Discount)) FROM \"Order Details\") FROM (SELECT SUM(od.UnitPrice * od.Quantity * (1 - od.Discount)) AS rev FROM \"Order Details\" od JOIN Orders o ON od.OrderID = o.OrderID GROUP BY o.CustomerID ORDER BY rev DESC LIMIT 10)",
+  "expected": [
+   [
+    12.458966990744802
+   ]
+  ],
+  "order_matters": false,
+  "difficulty": "hard",
+  "answerable": true
+ },
+ {
+  "qid": "biz-18",
+  "dataset": "northwind",
+  "question": "What was our best-selling product by quantity in 2023?",
+  "gold_sql": "SELECT p.ProductName FROM \"Order Details\" od JOIN Orders o ON od.OrderID = o.OrderID JOIN Products p ON od.ProductID = p.ProductID WHERE substr(o.OrderDate, 1, 4) = '2023' GROUP BY p.ProductID ORDER BY SUM(od.Quantity) DESC LIMIT 1",
+  "expected": [
+   [
+    "Sirop d'\u00e9rable"
+   ]
+  ],
+  "order_matters": false,
+  "difficulty": "hard",
+  "answerable": true
+ },
+ {
+  "qid": "biz-19",
+  "dataset": "northwind",
+  "question": "How many orders did each employee handle in 2023? Show the employee's last name and the count.",
+  "gold_sql": "SELECT e.LastName, COUNT(*) FROM Orders o JOIN Employees e ON o.EmployeeID = e.EmployeeID WHERE substr(o.OrderDate, 1, 4) = '2023' GROUP BY e.EmployeeID",
+  "expected": [
+   [
+    "Davolio",
+    118
+   ],
+   [
+    "Fuller",
+    129
+   ],
+   [
+    "Leverling",
+    130
+   ],
+   [
+    "Peacock",
+    126
+   ],
+   [
+    "Buchanan",
+    128
+   ],
+   [
+    "Suyama",
+    128
+   ],
+   [
+    "King",
+    132
+   ],
+   [
+    "Callahan",
+    122
+   ],
+   [
+    "Dodsworth",
+    119
+   ]
+  ],
+  "order_matters": false,
+  "difficulty": "medium",
+  "answerable": true
+ },
+ {
+  "qid": "biz-20",
+  "dataset": "northwind",
+  "question": "How many customers have placed more than 170 orders?",
+  "gold_sql": "SELECT COUNT(*) FROM (SELECT CustomerID FROM Orders GROUP BY CustomerID HAVING COUNT(*) > 170)",
+  "expected": [
+   [
+    54
+   ]
+  ],
+  "order_matters": false,
+  "difficulty": "medium",
+  "answerable": true
+ },
+ {
+  "qid": "biz-21",
+  "dataset": "northwind",
+  "question": "What is the average discount given on an order line?",
+  "gold_sql": "SELECT AVG(Discount) FROM \"Order Details\"",
+  "expected": [
+   [
+    0.0001986597361160577
+   ]
+  ],
+  "order_matters": false,
+  "difficulty": "easy",
+  "answerable": true
+ },
+ {
+  "qid": "biz-22",
+  "dataset": "northwind",
+  "question": "What is our profit margin for each product?",
+  "gold_sql": "",
+  "expected": null,
+  "order_matters": false,
+  "difficulty": "unanswerable",
+  "answerable": false
+ },
+ {
+  "qid": "biz-23",
+  "dataset": "northwind",
+  "question": "What is the customer satisfaction score for each product?",
+  "gold_sql": "",
+  "expected": null,
+  "order_matters": false,
+  "difficulty": "unanswerable",
+  "answerable": false
+ }
+]
