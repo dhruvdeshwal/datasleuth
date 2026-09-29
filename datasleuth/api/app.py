@@ -231,7 +231,7 @@ def create_app(settings: Settings | None = None, llm: LLM | None = None) -> Fast
         schema = store.schema(session)
         if schema is None:
             raise HTTPException(409, "Upload data before asking questions.")
-        agent =DataSleuthAgent(
+        agent = DataSleuthAgent(
             store.source(session),
             settings,
             llm=get_llm(),

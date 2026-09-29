@@ -97,10 +97,14 @@ class AnthropicProvider(Provider):
 
     def __init__(self, model: str, settings: Settings) -> None:
         super().__init__(model)
-        import anthropic
-
         if not settings.anthropic_api_key:
             raise LLMError("ANTHROPIC_API_KEY is not set.")
+        try:
+            import anthropic
+        except ImportError as exc:
+            raise LLMError(
+                "Install the Anthropic SDK: pip install 'datasleuth[anthropic]'"
+            ) from exc
         self._anthropic = anthropic
         self._client = anthropic.Anthropic(
             api_key=settings.anthropic_api_key, timeout=settings.llm_timeout_s, max_retries=0
@@ -136,10 +140,12 @@ class OpenAIProvider(Provider):
 
     def __init__(self, model: str, settings: Settings) -> None:
         super().__init__(model)
-        import openai
-
         if not settings.openai_api_key:
             raise LLMError("OPENAI_API_KEY is not set.")
+        try:
+            import openai
+        except ImportError as exc:
+            raise LLMError("Install the OpenAI SDK: pip install 'datasleuth[openai]'") from exc
         self._openai = openai
         self._client = openai.OpenAI(
             api_key=settings.openai_api_key, timeout=settings.llm_timeout_s, max_retries=0
